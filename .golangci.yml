@@ -1,0 +1,228 @@
+run:
+  go: "1.23"
+  timeout: 15s
+  issues-exit-code: 1
+  tests: false
+  skip-dirs-use-default: true
+
+output:
+  formats:
+    - format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - dogsled
+    - errcheck
+    - exportloopref
+    - funlen
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - godox
+    - gofmt
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    #    - interfacebloat
+    - nakedret
+    - noctx
+    - nolintlint
+    - exportloopref
+    #    - staticcheck
+    - stylecheck
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+    - wsl
+    - lll
+    - prealloc
+    - gochecknoinits
+
+linters-settings:
+  errcheck:
+    check-type-assertions: false
+    check-blank: false
+
+  gosec:
+    excludes:
+      - G104
+      - G115
+
+  funlen:
+    lines: 150
+    statements: 70
+
+  govet:
+    shadow: true
+
+    settings:
+      printf:
+        funcs:
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
+  interfacebloat:
+    max: 11
+  gofmt:
+    simplify: true
+  gocyclo:
+    min-complexity: 30
+  gocognit:
+    min-complexity: 30
+  maligned:
+    suggest-new: true
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  lll:
+    line-length: 120
+    tab-width: 1
+  unused:
+    check-exported: false
+  unparam:
+    check-exported: false
+  nakedret:
+    max-func-lines: 30
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: false
+  gocritic:
+    settings:
+      hugeParam:
+        sizeThreshold: 512
+      rangeValCopy:
+        sizeThreshold: 128
+    enabled-checks:
+      - badLock
+      - badRegexp
+      - builtinShadowDecl
+      - emptyDecl
+      - evalOrder
+      - externalErrorReassign
+      - filepathJoin
+      - nilValReturn
+      - regexpPattern
+      - returnAfterHttpError
+      - sortSlice
+      - sprintfQuotedString
+      - sqlQuery
+      - syncMapLoadAndDelete
+      - truncateCmp
+      - unnecessaryDefer
+      - weakCond
+      - boolExprSimplify
+      - builtinShadow
+      - commentedOutImport
+      - deferUnlambda
+      - docStub
+      - dupImport
+      - emptyStringTest
+      - hexLiteral
+      - httpNoBody
+      - importShadow
+      - initClause
+      - methodExprCall
+      - nestingReduce
+      - octalLiteral
+      - paramTypeCombine
+      - preferFilepathJoin
+      - ptrToRefParam
+      - redundantSprint
+      - regexpSimplify
+      - ruleguard
+      - stringConcatSimplify
+      - timeExprSimplify
+      - tooManyResultsChecker
+      - typeAssertChain
+      - typeDefFirst
+      - typeUnparen
+      - unlabelStmt
+      - unnamedResult
+      - unnecessaryBlock
+      - yodaStyleExpr
+      - appendCombine
+      - equalFold
+      - hugeParam
+      - indexAlloc
+      - preferDecodeRune
+      - preferFprint
+      - preferStringWriter
+      - preferWriteByte
+      - rangeExprCopy
+      - rangeValCopy
+      - sliceClear
+      - stringXbytes
+
+  gomnd:
+    checks:
+      - argument
+      - case
+      - condition
+      - operation
+      - return
+      - assign
+  godox:
+    keywords:
+      - BUG
+      - FIXME
+      - NOTE
+      - OPTIMIZE
+      - HACK
+  dogsled:
+    max-blank-identifiers: 2
+  stylecheck:
+    checks: [ all, -ST1003, -ST1000]
+
+  whitespace:
+    multi-if: false
+    multi-func: false
+  wsl:
+    strict-append: true
+    allow-assign-and-call: true
+    allow-multiline-assign: true
+    allow-cuddle-declarations: false
+    allow-trailing-comment: false
+    force-case-trailing-whitespace: 0
+    auto-fix: true
+  nolintlint:
+    allow-unused: false
+    require-explanation: false
+    require-specific: false
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - funlen
+    - linters:
+        - lll
+      source: "^//go:generate "
+
+    - linters:
+        - golint
+      text: don't use an underscore in package name
+    - linters:
+        - golint
+      text: should have comment or be unexported
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new: false
+

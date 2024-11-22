@@ -1,0 +1,29 @@
+app:
+  id: 1
+  name: tele-opeai-template
+  log_level: debug
+  is_log_json: false
+
+bot:
+  token: ""
+  timeout: 10s
+  whitelist:
+    -
+
+openai:
+  enabled: true
+  api_key: ""
+
+replicate:
+  enabled: true
+  token: ""
+
+metrics:
+  enabled: false
+  host: ""
+  port: 0
+
+tracing:
+  enabled: false
+  host: ""
+  port: 0
