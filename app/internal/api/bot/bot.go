@@ -161,11 +161,13 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 
 		aspectRatio, err := replicate.NewAspectRatio(ratio)
 		if err != nil {
+			logging.L(ctx).Error("wrong ratio", logging.ErrAttr(err), logging.StringAttr("ratio", ratio))
 			return c.Send("Oops. Wrong ratio specified. Try again.", menu)
 		}
 
 		err = c.Send("Generating prompt for neural network based on your request...")
 		if err != nil {
+			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
 		}
 
@@ -173,6 +175,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 
 		openaiPrompt, err := w.openaiSvc.GenerateImagePrompt(ctx, prompt)
 		if err != nil {
+			logging.L(ctx).Error("failed to generate prompt", logging.ErrAttr(err))
 			return c.Send("Oops. There is a problem with your request.", menu)
 		}
 
@@ -180,11 +183,13 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 
 		err = c.Send("Prompt generated in " + s2.Sub(s1).String())
 		if err != nil {
+			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
 		}
 
 		err = c.Send("Generating image...")
 		if err != nil {
+			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
 		}
 
@@ -196,6 +201,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 			),
 		)
 		if err != nil {
+			logging.L(ctx).Error("failed to generate image", logging.ErrAttr(err))
 			return err
 		}
 
@@ -203,6 +209,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 
 		err = c.Send("Image generated in " + s3.Sub(s2).String())
 		if err != nil {
+			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
 		}
 
