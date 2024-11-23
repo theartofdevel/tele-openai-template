@@ -188,7 +188,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 
 		s2 := time.Now()
 
-		err = c.Send("Prompt generated in " + s2.Sub(s1).String())
+		err = c.Send("Prompt generated in " + s2.Sub(s1).Round(time.Second).String())
 		if err != nil {
 			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
@@ -214,7 +214,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 
 		s3 := time.Now()
 
-		err = c.Send("Image generated in " + s3.Sub(s2).String())
+		err = c.Send("Image generated in " + s3.Sub(s2).Round(time.Second).String())
 		if err != nil {
 			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
