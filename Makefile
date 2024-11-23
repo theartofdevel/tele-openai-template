@@ -1,6 +1,10 @@
-.PHONY: lint
-lint:
-	cd app; golangci-lint run -v --out-format tab --path-prefix app/
+.PHONY: update
+update: pull build-docker
+	@echo "Done!s"
+
+.PHONY: pull
+pull:
+	@git pull
 
 .PHONY: lint-ci
 lint-ci:

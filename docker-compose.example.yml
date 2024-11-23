@@ -1,0 +1,11 @@
+services:
+  tele-openai-bot:
+    image: tele-openai-bot:1.0.0
+    container_name: tele-openai-bot
+    restart: always
+    user: "1000:1000" # set uid:gid to host user to avoid permission issues with mounted volumes
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
