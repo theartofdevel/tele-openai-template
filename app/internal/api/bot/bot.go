@@ -121,8 +121,13 @@ func (w *Wrapper) generateImageHandler(c tb.Context) error {
 
 	w.states.Set(c.Sender().ID, ImageDoing)
 
-	return c.Send("Enter request in this format: ratio (3:2, 4:3, 16:9)\nAnd here description what "+
-		"do you want to generate. Try to be more specific and precise in your request.", menu)
+	return c.Send(""+
+		"Enter request in this format: ratio 3:2, 4:3, 16:9\nAnd here description what "+
+		"do you want to generate. Try to be more specific and precise in your request. You can use any language. Дажа на русском.\n"+
+		"Вот пример запроса:"+
+		"16:9\n"+
+		"Шоссе ночь фонари много машин красная машина с белой надписью на левом боку, обгоняет чёрную машину с жёлтой надписью на левом боку это всё дело снимает оператор с обочины"+
+		"", menu)
 }
 
 func (w *Wrapper) onTextHandler(c tb.Context) error {
