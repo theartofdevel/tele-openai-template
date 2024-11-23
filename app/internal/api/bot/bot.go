@@ -140,6 +140,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 	case ChatDoing:
 		answer, err := w.openaiSvc.ChatCompletion(ctx, c.Sender().ID, txt)
 		if err != nil {
+			logging.L(ctx).Error("failed to do chat completion", logging.ErrAttr(err))
 			return c.Send("Oops. There is a problem with your request.", menu)
 		}
 
@@ -147,6 +148,7 @@ func (w *Wrapper) onTextHandler(c tb.Context) error {
 	case ImageDoing:
 		err := c.Send("Preparing data...")
 		if err != nil {
+			logging.L(ctx).Error("failed to send message", logging.ErrAttr(err))
 			return err
 		}
 
